@@ -3,6 +3,6 @@ services:
   parse_dump:
     #image: 
     build: ./parser
-    volume:
+    volumes:
       - "../:/dumpdir"
     command: parse_dump_dir /dumpdir
