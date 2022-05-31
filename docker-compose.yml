@@ -4,5 +4,5 @@ services:
     #image: 
     build: ./parser
     volumes:
-      - "../:/dumpdir"
+      - "/c/dumpdir:/dumpdir"
     command: parse_dump_dir /dumpdir
