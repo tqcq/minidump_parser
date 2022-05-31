@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
 WORKDIR="/dumpdir"
+cd $WORKDIR
+
+for i in $WORKDIR/*zip;
+do
+	unzip $i
+done

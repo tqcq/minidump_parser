@@ -6,7 +6,7 @@ WORKDIR /work
 
 # install base-tools
 RUN apt-get update -y && \
-    apt-get install -y git gcc g++ make wget
+    apt-get install -y git gcc g++ make wget unzip
 
 # setup depot_tools, fetch breakpad
 RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git depot_tools && \
