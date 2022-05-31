@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 dump_file="$1"
 apk_file="$2"
 output_file="$3"
