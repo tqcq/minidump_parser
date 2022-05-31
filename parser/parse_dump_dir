@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+if [ "$1" == "--help" ]; then
+    echo "parse_dump_dir <dump_dir> <output_dir> [apk_file]"
+    exit 0
+fi
+
+dump_dir="$1"
+output_dir="$2"
+if [ "$output_dir" == "" ]; then
+    output_dir="."
+fi
+
+if [ "$3" == "" ]; then
+    apk_file="$dump_dir/`ls -1 -f $dump_dir | grep apk | head -n1`"
+else
+    apk_file="$3"
+fi
+
+cpu=$(nproc)
+
+count=0
+echo "cpu: $cpu"
+for dir in $dump_dir/*;
+do
+    if [ ! -d $dir ]; then
+        echo "skip file $dir"
+        continue
+    fi
+    dmp_file="$dir/Dump/`ls -1 -f $dir/Dump/ | grep dmp | head -n1`"
+    if [ "$dmp_file" == "" ]; then
+        continue
+    fi
+    echo ">>>> $dmp_file"
+    parse_dump $dmp_file $apk_file $dir/Dump/dump_stack.txt &
+    count=$((count+1))
+    if [ $count -ge $cpu ]; then
+        wait
+        count=0
+    fi
+done
+
+wait

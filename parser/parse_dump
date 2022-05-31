@@ -1,0 +1,35 @@
+#!/bin/bash
+dump_file="$1"
+apk_file="$2"
+output_file="$3"
+work_dir="$(mktemp -d)"
+
+[ ! -d $work_dir/res ] && mkdir -v $work_dir/res
+[ ! -d $work_dir/syms/tmp ] && mkdir -pv $work_dir/syms/tmp
+
+unzip "$apk_file" -d $work_dir/res
+
+IPS='
+'
+for so_file in $(find "$work_dir/res" -name "*.so" -type f);
+do
+    so_file_name=${so_file##*/}
+    tmp_sym_file="$work_dir/syms/tmp/${so_file_name}.sym"
+
+    dump_syms "$so_file" > $tmp_sym_file
+    hash_dir=$(head -n1 $tmp_sym_file |  awk '{print $4}')
+
+    real_sym_dir="$work_dir/syms/$so_file_name/$hash_dir/"
+    real_sym_file="${real_sym_dir}/${so_file_name}.sym"
+
+    [ ! -d ${real_sym_dir} ] && mkdir -pv ${real_sym_dir}
+    cp $tmp_sym_file $real_sym_file
+done
+if [ "$output_file" == "" ]; then
+	minidump_stackwalk $1 $work_dir/syms/ > dump_stack.txt
+else
+	minidump_stackwalk $1 $work_dir/syms/ > $output_file
+fi
+
+echo $work_dir
+rm -rf $work_dir
