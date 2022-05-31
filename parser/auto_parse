@@ -5,5 +5,7 @@ cd $WORKDIR
 
 for i in $WORKDIR/*zip;
 do
-	unzip $i
+	unzip "$i"
 done
+
+parse_dump_dir .

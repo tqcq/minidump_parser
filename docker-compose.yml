@@ -5,4 +5,4 @@ services:
     build: ./parser
     volumes:
       - "/c/dumpdir:/dumpdir"
-    command: parse_dump_dir /dumpdir
+    command: ["auto_parse",  "/dumpdir"]

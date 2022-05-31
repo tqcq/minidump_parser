@@ -20,6 +20,7 @@ RUN cd src && \
 
 COPY parse_dump /usr/local/bin
 COPY parse_dump_dir /usr/local/bin
+COPY auto_parse /usr/local/bin
 
 RUN chmod a+x /usr/local/bin/parse_dump*
 
