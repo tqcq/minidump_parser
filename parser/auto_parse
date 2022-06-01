@@ -5,7 +5,8 @@ cd $WORKDIR
 
 for i in $WORKDIR/*zip;
 do
-	unzip "$i"
+    name=$(basename "$i" ".zip")
+	unzip "$i" -d $name
 done
 
 parse_dump_dir .
