@@ -40,3 +40,19 @@ docker-compose.exe up
 ls
 
 ```
+
+## 备注
+1. 包含`minidump`的`zip`压缩包格式
+```shell
+minidump-example
+└── Dump
+    └── 11ee03ba-68fe-485f-a8a7-6b6d13176622.dmp
+```
+
+2. 解析完成后，将会在 `Dump` 目录下生成对应的 `dump_stack.txt` 文件。
+```shell
+minidump-example
+└── Dump
+    ├── 11ee03ba-68fe-485f-a8a7-6b6d13176622.dmp
+    └── dump_stack.txt
+```
